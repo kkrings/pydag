@@ -1,0 +1,4 @@
+universe = vanilla
+executable = test.py
+args = "$(name)"
+queue 1

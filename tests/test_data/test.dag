@@ -1,0 +1,5 @@
+JOB A test.submit
+SCRIPT PRE A test.py $JOB
+VARS A name="value"
+JOB B test.submit
+PARENT A CHILD B
