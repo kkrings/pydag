@@ -3,12 +3,13 @@
 PyDAG
 =====
 
-`PyDAG` allows you to create `HTCondor`_ submit descriptions, `DAGMan`_ nodes,
-and `DAGs` via Python. Any Python object that has a string representation that
-corresponds to a valid `HTCondor` command or `DAGMan` keyword can be added to
-the submit description. You can easily extend `PyDAG` by defining your own
-command/keyword classes; classes for pre/post-scripts and macros are already
-provided.
+Simple Python Interface to `HTCondor`_ and `DAGMan`_
+
+PyDAG allows you to create HTCondor submit descriptions, DAGMan nodes, and DAGs
+via Python. Any Python object that has a string representation that corresponds
+to a valid HTCondor command or DAGMan keyword can be added to the submit
+description. You can easily extend PyDAG by defining your own command/keyword
+classes; classes for pre/post-scripts and macros are already provided.
 
 
 .. automodule:: pydag.htcondor
