@@ -5,7 +5,7 @@ import setuptools
 
 
 setuptools.setup(
-    name="PyDAG",
+    name="pydag",
     version="0.1",
     author="Kai Krings",
     author_email="kai.krings88@gmx.net",
