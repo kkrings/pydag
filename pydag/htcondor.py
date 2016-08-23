@@ -17,6 +17,22 @@ class HTCondorSubmit(object):
     queue : int
         Number of jobs to queue
 
+    Examples
+    --------
+    Create HTCondor submit description for a Python script.
+
+    >>> import pydag
+    >>> job = pydag.htcondor.HTCondorSubmit("example.submit", "example.py")
+    >>> job.commands["initialdir"] = "$ENV(HOME)"
+    >>> print(job)
+    universe = vanilla
+    executable = example.py
+    initialdir = $ENV(HOME)
+    queue 1
+    >>> job.dump()
+    >>> print(job.written_to_disk)
+    True
+
     """
     def __init__(self, filename, executable, queue=1, **kwargs):
         self.filename = filename
