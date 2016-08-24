@@ -10,6 +10,26 @@ class DAGManJob(object):
     nodes : List[DAGManNode]
         Sequence of DAGMan nodes
 
+    Examples
+    --------
+    Create a DAG with one node; a macro ``inputfile`` is defined; the
+    macro's value is passed as an argument to the Python script that is
+    specified as the executable in the node's HTCondor submit
+    description.
+
+    >>> import pydag
+    >>> job = pydag.htcondor.HTCondorSubmit("example.submit", "example.py")
+    >>> job.commands["arguments"] = "$(inputfile)"
+    >>> node = pydag.dagman.DAGManNode("example", job)
+    >>> node["VARS"] = pydag.dagman.Macros(inputfile="example.txt")
+    >>> dag = pydag.dagman.DAGManJob("example.dag", [node])
+    >>> print(dag)
+    JOB example example.submit
+    VARS example inputfile="example.txt"
+    >>> dag.dump()
+    >>> print(dag.written_to_disk)
+    True
+
     """
     def __init__(self, filename, nodes):
         self.filename = filename
@@ -94,7 +114,8 @@ class DAGManNode(object):
         Uniquely identifies nodes within the DAGMan input file and in
         output messages.
     submit_description : HTCondorSubmit, str
-        HTCondor submit description
+        HTCondor submit description; either a string specifying a submit
+        description file or an `HTCondorSubmit` instance.
     keywords : Dict[str, object]
         Mapping of objects describing node keywords
 
