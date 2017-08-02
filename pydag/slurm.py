@@ -4,7 +4,9 @@ import os
 class SBatchSubmit(object):
     r"""SLURM sbatch submit description
 
-    Represents a sbatch submit description of a single task SLURM job.
+    Represents a sbatch submit description of a single-task SLURM job.
+    Additionally, a simple file transfer mechanism between node and
+    shared file systems is realized.
 
     Parameters
     ----------
@@ -35,8 +37,12 @@ class SBatchSubmit(object):
         self.filename = filename
         self.executable = executable
         self.arguments = arguments
+
+        # SLURM sbatch options
         self.options = kwargs
         self.options['ntasks'] = 1
+
+        # File transfer mechanism
         self.transfer_executable = False
         self.transfer_input_files = []
         self.transfer_output_files = []
