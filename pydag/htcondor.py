@@ -1,21 +1,24 @@
 class HTCondorSubmit(object):
-    """HTCondor submit description
+    r"""HTCondor submit description
 
     Represents a submit description of a HTCondor job.
 
     Parameters
     ----------
+    filename : str
+        HTCondor submit description file
     executable : str
         HTCondor executable file
+    queue : int, optional
+        Number of jobs to queue
+    \*\*kwargs
+        Submit description file commands
 
     Attributes
     ----------
-    filename : str
-        HTCondor submit description file
-    commands : Dict[str, object]
-        Mapping of objects describing submit description file commands
-    queue : int
-        Number of jobs to queue
+    commands : dict(str, object)
+        Mapping of describing submit description file commands to
+        objects representing values
 
     Examples
     --------
@@ -52,7 +55,7 @@ class HTCondorSubmit(object):
                 "\nqueue {0}".format(self.queue))
 
     def dump(self):
-        """Writes HTCondor submit description to `filename`.
+        r"""Write HTCondor submit description to `filename`.
 
         """
         with open(self.filename, "w") as ostream:
@@ -62,6 +65,6 @@ class HTCondorSubmit(object):
 
     @property
     def written_to_disk(self):
-        """Bool: If `True` submit description was written to disk.
+        r"""bool: If `True` submit description was written to disk.
         """
         return self._written_to_disk

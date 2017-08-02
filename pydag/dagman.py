@@ -1,5 +1,5 @@
 class DAGManJob(object):
-    """DAGMan job
+    r"""DAGMan job
 
     Specify a DAG's input.
 
@@ -7,7 +7,7 @@ class DAGManJob(object):
     ----------
     filename : str
         DAGMan input file
-    nodes : List[DAGManNode]
+    nodes : list(DAGManNode)
         Sequence of DAGMan nodes
 
     Examples
@@ -46,7 +46,7 @@ class DAGManJob(object):
         return "\n".join(job)
 
     def dump(self):
-        """Writes DAGMan input file to `filename`.
+        r"""Write DAGMan input file to `filename`.
 
         """
         for node in self.nodes:
@@ -59,7 +59,7 @@ class DAGManJob(object):
         self._written_to_disk = True
 
     def add_dependency(self, parents, children):
-        """Add dependency within the DAG.
+        r"""Add dependency within the DAG.
 
         Nodes are parents and/or children within the DAG. A parent node
         must be completed successfully before any of its children may be
@@ -68,9 +68,9 @@ class DAGManJob(object):
 
         Parameters
         ----------
-        parents : Tuple[str]
+        parents : tuple(str)
             Parent node names
-        children : Tuple[str]
+        children : tuple(str)
             Children node names
 
         Raises
@@ -91,33 +91,38 @@ class DAGManJob(object):
 
     @property
     def dependencies(self):
-        """Str: Dependencies within the DAG
+        r"""str: Dependencies within the DAG
         """
         return [(" ".join(parents), " ".join(children))
                 for parents, children in self._dependencies.iteritems()]
 
     @property
     def written_to_disk(self):
-        """Bool: If `True` DAGMan input file was written to disk.
+        r"""bool: If `True` DAGMan input file was written to disk.
         """
         return self._written_to_disk
 
 
 class DAGManNode(object):
-    """DAGMan node
+    r"""DAGMan node
 
     Specify a DAG's node.
 
-    Attributes
+    Parameters
     ----------
     name : str
         Uniquely identifies nodes within the DAGMan input file and in
-        output messages.
+        output messages
     submit_description : HTCondorSubmit, str
         HTCondor submit description; either a string specifying a submit
-        description file or an `HTCondorSubmit` instance.
-    keywords : Dict[str, object]
-        Mapping of objects describing node keywords
+        description file or an `HTCondorSubmit` instance
+    \*\*kwargs
+        Node keywords
+
+    Attributes
+    ----------
+    keywords : dict(str, object)
+        Mapping of node keywords to objects representing values
 
     """
     def __init__(self, name, submit_description, **kwargs):
@@ -141,18 +146,23 @@ class DAGManNode(object):
 
 
 class DAGManScript(object):
-    """Pre-processing or post-processing
+    r"""Pre-processing or post-processing
 
     Specify a shell script/batch file to be executed either before a
     job within a node is submitted or after a job within a node
     completes its execution.
 
-    Attributes
+    Parameters
     ----------
     executable : str
-        Specifies the shell script/batch file to be executed.
-    arguments : List[object]
-        Sequence of objects describing script/batch file arguments
+        Specify the shell script/batch file to be executed.
+    \*args
+        Script/batch file arguments
+
+    Attributes
+    ----------
+    arguments : list(object)
+        Sequence of objects representing script/batch file arguments
 
     """
     def __init__(self, executable, *args):
