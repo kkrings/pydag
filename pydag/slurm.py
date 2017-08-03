@@ -98,7 +98,7 @@ if [ "$transfer_executable" = "true" ]
 then
     echo 'Transfer executable to node:'
     cp -v $executable .
-    executable=$workdir/`basename $executable`
+    executable=./`basename $executable`
 fi
 
 inputfiles=({transfer_input_files})
