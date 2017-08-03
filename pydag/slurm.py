@@ -87,7 +87,7 @@ _skeleton = """#!/usr/bin/env bash
 echo "Working on node `hostname`."
 
 echo 'Create working directory:'
-workdir=$SLURM_JOB_NAME
+workdir="slurm_job_$$"
 mkdir -v $workdir
 cd $workdir
 
