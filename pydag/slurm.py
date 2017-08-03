@@ -16,8 +16,6 @@ class SBatchSubmit(object):
         Path to executable
     arguments : str, optional
         Arguments that will be passed to `executable`
-    \*\*kwargs
-        SLURM sbatch options
 
     Attributes
     ----------
@@ -33,14 +31,13 @@ class SBatchSubmit(object):
         executing `executable`
 
     """
-    def __init__(self, filename, executable, arguments='', **kwargs):
+    def __init__(self, filename, executable, arguments=""):
         self.filename = filename
         self.executable = executable
         self.arguments = arguments
 
         # SLURM sbatch options
-        self.options = kwargs
-        self.options['ntasks'] = 1
+        self.options = {"ntasks": 1}
 
         # File transfer mechanism
         self.transfer_executable = False
@@ -52,9 +49,17 @@ class SBatchSubmit(object):
                 for key, val in self.options.iteritems())))
 
     def dump(self):
-        """Write SLURM sbatch submit description to `filename`.
+        r"""Write SLURM sbatch submit description to `filename`.
+
+        Raises
+        ------
+        ValueError
+            In case of multi-task jobs
 
         """
+        if "ntasks" not in self.options or self.options["ntasks"] != 1:
+            raise ValueError("Only single-task jobs are supported.")
+
         transfer_input_files = " ".join(
             "'{}'".format(os.path.abspath(f))
             for f in self.transfer_input_files)
@@ -71,7 +76,7 @@ class SBatchSubmit(object):
             transfer_input_files=transfer_input_files,
             transfer_output_files=transfer_output_files)
 
-        with open(self.filename, 'w') as ostream:
+        with open(self.filename, "w") as ostream:
             ostream.write(description)
 
 
