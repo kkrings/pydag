@@ -8,7 +8,7 @@ setuptools.setup(
     name="pydag",
     version="0.1",
     author="Kai Krings",
-    author_email="kai.krings88@gmx.net",
+    author_email="kai.krings@posteo.net",
     description="Simple Python interface to HTCondor/DAGMan",
     url="https://github.com/kkrings/pydag/",
     license="GPLv3",
