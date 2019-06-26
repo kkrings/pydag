@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+
 class DAGManJob(object):
     r"""DAGMan job
 
@@ -94,7 +97,7 @@ class DAGManJob(object):
         r"""str: Dependencies within the DAG
         """
         return [(" ".join(parents), " ".join(children))
-                for parents, children in self._dependencies.iteritems()]
+                for parents, children in self._dependencies.items()]
 
     @property
     def written_to_disk(self):
@@ -140,7 +143,7 @@ class DAGManNode(object):
 
         node.extend("{key} {job} {value}".format(
             key=key, job=self.name, value=value)
-            for key, value in self.keywords.iteritems())
+            for key, value in self.keywords.items())
 
         return "\n".join(node)
 
@@ -186,4 +189,4 @@ class Macros(dict):
     """
     def __str__(self):
         return " ".join('{key}="{val}"'.format(key=key, val=val)
-                        for key, val in self.iteritems())
+                        for key, val in self.items())

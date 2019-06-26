@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 
 
@@ -46,7 +48,7 @@ class SBatchSubmit(object):
 
     def __str__(self):
         return ("\n".join(("#SBATCH --{key}={val}".format(key=key, val=val)
-                for key, val in self.options.iteritems())))
+                for key, val in self.options.items())))
 
     def dump(self):
         r"""Write SLURM sbatch submit description to `filename`.

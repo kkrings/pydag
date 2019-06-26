@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+
 class HTCondorSubmit(object):
     r"""HTCondor submit description
 
@@ -51,7 +54,7 @@ class HTCondorSubmit(object):
 
     def __str__(self):
         return ("\n".join("{key} = {value}".format(key=key, value=value)
-                for key, value in self.commands.iteritems()) +
+                for key, value in self.commands.items()) +
                 "\nqueue {0}".format(self.queue))
 
     def dump(self):
