@@ -2,7 +2,6 @@
 
 from . import dagman
 from . import htcondor
-from . import slurm
 
 
-__all__ = ["dagman", "htcondor", "slurm"]
+__all__ = ["dagman", "htcondor"]

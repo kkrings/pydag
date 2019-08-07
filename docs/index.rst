@@ -18,9 +18,6 @@ classes; classes for pre/post-scripts and macros are already provided.
 .. automodule:: pydag.dagman
     :members:
 
-.. automodule:: pydag.slurm
-    :members:
-
 
 Indices and tables
 ==================
