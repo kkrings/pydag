@@ -1,15 +1,28 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""Unit tests for `pydag`
+
+"""
 import os
+import tempfile
 import unittest
 
+import pkg_resources
 import pydag
 
 
 class TestPyDAG(unittest.TestCase):
+    """Test cases for `pydag`
+
+    """
     def runTest(self):
+        test_data = pkg_resources.resource_filename(__name__, "test_data")
+
         job = pydag.htcondor.HTCondorSubmit("test.submit", "test.py")
         job.commands["args"] = '"$(name)"'
 
-        with open("test_data/test.submit") as stream:
+        with open(os.path.join(test_data, "test.submit")) as stream:
             self.assertEqual(str(job), stream.read()[:-1])
 
         nodes = [
@@ -27,12 +40,12 @@ class TestPyDAG(unittest.TestCase):
         dag.nodes[0].keywords["SCRIPT PRE"].arguments.append("$JOB")
         dag.add_dependency(parents=("A"), children=("B"))
 
-        with open("test_data/test.dag") as stream:
+        with open(os.path.join(test_data, "test.dag")) as stream:
             self.assertEqual(str(dag), stream.read()[:-1])
 
         dag.nodes[0].submit_description = "test.submit"
 
-        with open("test_data/test.dag") as stream:
+        with open(os.path.join(test_data, "test.dag")) as stream:
             self.assertEqual(str(dag), stream.read()[:-1])
 
         with self.assertRaises(ValueError):
@@ -41,16 +54,17 @@ class TestPyDAG(unittest.TestCase):
         with self.assertRaises(ValueError):
             dag.add_dependency(parents=("A"), children=("C"))
 
-        dag.dump()
-        self.assertTrue(job.written_to_disk)
-        self.assertTrue(dag.written_to_disk)
-        self.assertTrue(os.path.exists(job.filename))
-        self.assertTrue(os.path.exists(dag.filename))
+        with tempfile.TemporaryDirectory(prefix="pydag_") as dirname:
+            job.filename = os.path.join(dirname, job.filename)
+            dag.filename = os.path.join(dirname, dag.filename)
 
-        os.remove(job.filename)
-        os.remove(dag.filename)
+            dag.dump()
+            self.assertTrue(job.written_to_disk)
+            self.assertTrue(dag.written_to_disk)
+            self.assertTrue(os.path.exists(job.filename))
+            self.assertTrue(os.path.exists(dag.filename))
 
 
 if __name__ == "__main__":
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestPyDAG)
-    unittest.TextTestRunner(verbosity=2).run(suite)
+    # Execute unit tests.
+    unittest.main()
