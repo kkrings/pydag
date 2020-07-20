@@ -24,7 +24,7 @@ class DAGManJob(object):
     >>> job = pydag.htcondor.HTCondorSubmit("example.submit", "example.py")
     >>> job.commands["arguments"] = "$(inputfile)"
     >>> node = pydag.dagman.DAGManNode("example", job)
-    >>> node["VARS"] = pydag.dagman.Macros(inputfile="example.txt")
+    >>> node.keywords["VARS"] = pydag.dagman.Macros(inputfile="example.txt")
     >>> dag = pydag.dagman.DAGManJob("example.dag", [node])
     >>> print(dag)
     JOB example example.submit
